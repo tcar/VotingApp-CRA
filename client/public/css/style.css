@@ -1,0 +1,26 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    
+}
+.chart div{
+    background: blue;
+}
+
+
+.header{
+color: #e6ffff;
+background: rgb(0,188,212);
+
+}
+.header h1, h2{
+    text-align: center
+}
+.center{
+    text-align: center;
+}
+
+/*Typography*/
+
+h1,h2,h3,h4{
+    
+}
