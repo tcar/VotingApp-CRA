@@ -4,7 +4,7 @@ import {BrowserRouter,Route} from 'react-router-dom';
 import Home from "./components/Home";
 import NewPoll from "./containers/NewPoll";
 import MyPolls from "./containers/MyPolls";
-import Votes from "./components/Votes";
+import Votes from "./containers/Votes";
 
 
 class App extends Component {

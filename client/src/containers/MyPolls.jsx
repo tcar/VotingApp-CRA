@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
+import {connect} from "react-redux";
+
+import * as polls from '../actions/poll'
 
 export default class NewPolls extends React.Component {
     constructor(){
@@ -48,3 +51,19 @@ export default class NewPolls extends React.Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+      polls: state.polls,
+     
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setName: (name) => {
+            dispatch(setName(name));
+        }
+    };
+};
