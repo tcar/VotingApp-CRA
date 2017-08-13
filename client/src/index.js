@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import {AppContainer} from 'react-hot-loader';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {provider} from 'react-redux';
+import {Provider} from 'react-redux';
 import store from './store';
 
 injectTapEventPlugin();
@@ -15,9 +15,9 @@ function render(Component){
 ReactDOM.render(
     <AppContainer>
         <MuiThemeProvider>
-            <provider store={store}>
-            <Component />
-            </provider>
+        <Provider store={store}>
+            <Component /> 
+            </Provider>
         </MuiThemeProvider>
     </AppContainer>
     , document.getElementById('root'));

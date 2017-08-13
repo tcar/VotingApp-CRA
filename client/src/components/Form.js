@@ -23,7 +23,6 @@ export default class NewPoll extends React.Component {
        <TextField  name='option' onChange={() => this.props.setPoll()} hintText="option"/>
        </div>
        )
-        console.log(this.props.poll)
         return (
             <div className='container center'>
             <paper>

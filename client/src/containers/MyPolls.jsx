@@ -1,44 +1,34 @@
 import React from 'react';
-import axios from 'axios';
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from "react-redux";
 
-import * as polls from '../actions/poll'
+import {getPolls} from '../actions/poll'
+import {deletePoll} from '../actions/poll'
 
-export default class NewPolls extends React.Component {
+ class MyPolls extends React.Component {
     constructor(){
         super();
-        this.state={
-            polls: [],
-            id:''
-        }
         this.deleteElement=this.deleteElement.bind(this)
     }
     
     componentDidMount(){
-        axios.get('http://localhost:8080/polls')
-        .then((response)=>{
-            this.setState({polls:response.data});
-        })
-         .catch((error)=> {
-          console.log(error);
-        });
-
+            this.props.getPolls();
+            
     }
+    
     deleteElement(id){
-
-           axios.delete('http://localhost:8080/polls/' + id)
-         .then(response => {
-      // The game is also removed from the state thanks to the filter function
-      this.setState({ polls: this.state.polls.filter(poll => poll._id !== id) }); 
-    })
+            
+    this.props.deletePoll(id)
+    console.log(this.props.polls.polls)
   
+   
+
     }
         
     render(){
-        console.log(this.state.id)
-        const polls=this.state.polls.map((poll)=>
+        console.log(this.props.polls.polls)
+        const polls=this.props.polls.polls.map((poll)=>
             <div key ={poll._id}><ListItem onTouchTap={() => this.props.history.push('/votes/'+ poll._id)} rightIconButton={<RaisedButton onClick={()=> this.deleteElement(poll._id)} label="DELETE" secondary={true} />} primaryText={poll.question}/></div>
         )
 
@@ -62,8 +52,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setName: (name) => {
-            dispatch(setName(name));
+        getPolls: () => {
+            dispatch(getPolls());
+        },
+        deletePoll: (id) => {
+            dispatch(deletePoll(id));
         }
     };
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyPolls)
