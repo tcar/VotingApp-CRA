@@ -20,14 +20,11 @@ import {deletePoll} from '../actions/poll'
     deleteElement(id){
             
     this.props.deletePoll(id)
-    console.log(this.props.polls.polls)
   
-   
 
     }
         
     render(){
-        console.log(this.props.polls.polls)
         const polls=this.props.polls.polls.map((poll)=>
             <div key ={poll._id}><ListItem onTouchTap={() => this.props.history.push('/votes/'+ poll._id)} rightIconButton={<RaisedButton onClick={()=> this.deleteElement(poll._id)} label="DELETE" secondary={true} />} primaryText={poll.question}/></div>
         )

@@ -12,21 +12,20 @@ export default class Header extends React.Component {
 
      
 
-    let logedIn = this.props.state
      let buttons;
      let logout;
     
-     if(logedIn){
+     if(this.props.login){
          buttons = (
              <div>
-             <Link to="/newpoll"><RaisedButton label="New Poll" primary={true}  /></Link>
-            <Link to="/mypolls"><RaisedButton  label="My Polls" primary={true}  /></Link>
+             <Link to="/newpoll"><RaisedButton onClick={this.props.notVoted} label="New Poll" onClick={this.props.newPoll} primary={true}  /></Link>
+            <Link to="/mypolls"><RaisedButton  onClick={this.props.notVoted} label="My Polls" primary={true}  /></Link>
             </div>
          )
-         logout =(<Link to="/"><RaisedButton onClick={this.props.login} label="Logout" primary={true} /></Link>)
+         logout =(<Link to="/"><RaisedButton onClick={this.props.notVoted} onClick={this.props.logout} label="Logout" primary={true} /></Link>)
      }else{
 
-  buttons =(<RaisedButton onClick={this.props.login}label="Login"  primary={true}  />)
+  buttons =(<RaisedButton onClick={this.props.notVoted} onClick={this.props.loggmein}label="Login"  primary={true}  />)
      }
        
 
