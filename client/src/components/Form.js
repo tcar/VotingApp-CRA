@@ -9,12 +9,7 @@ export default class NewPoll extends React.Component {
             options:[]
         }
     }
-    addoption(){
-        
-        var options = this.state.options.slice()
-        options.push(this.state.options.length)
-        this.setState({ options: options })
-    }
+
 
     render(){
        const options = this.state.options.map((i)=>

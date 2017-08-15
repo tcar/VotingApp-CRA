@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import Poll from './app/models/poll';
+import { signup, login, verifyAuth } from './app/routes/user';
 import {getPolls, getPoll, postPoll, deletePoll, putVote,vote} from './app/routes/poll';
 
 const app = express();
@@ -30,10 +31,14 @@ app.use((req, res, next) => {
 });
 
 
+
+app.post('/auth/login', login);
+app.post('/auth/signup', signup);
+
 // API routes
 app.route('/polls')
   // create a poll
-  .post(postPoll)
+  .post(verifyAuth, postPoll)
   // get all the poll
   .get(getPolls);
 
@@ -41,12 +46,11 @@ app.route('/polls/:id')
   // get a single poll
   .get(getPoll)
   // delete a single poll
-  .delete(deletePoll);
+  .delete(verifyAuth, deletePoll);
 
   app.route('/polls/voting/:vote')
   .put(putVote)
   .get(vote)
-
 
   
 // ...For all the other requests just sends back the Homepage
