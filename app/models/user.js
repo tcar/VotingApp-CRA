@@ -18,9 +18,9 @@ const userSchema = new Schema({
         type: String,
        
     },
-    Polls:[{
-        type:Schema.Types.ObjectId, ref:'Poll'
-    }]
+  polls:[{
+    type:Schema.Types.ObjectId, ref:'Poll'
+  }]
 
 })
 

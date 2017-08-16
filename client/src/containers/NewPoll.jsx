@@ -2,9 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux'
 
 import {postPoll} from '../actions/poll';
-import {createNewPoll, addOptions} from '../actions/poll';
+import {createNewPoll, addOptions,removeOption} from '../actions/poll';
 import Form from '../components/Form';
 import Share from '../components/Share';
+import Snackbar from 'material-ui/Snackbar';
+;
 
 
  class NewPoll extends React.Component {
@@ -15,13 +17,21 @@ import Share from '../components/Share';
     this.ubmit = this.ubmit.bind(this);
     this.setPoll = this.setPoll.bind(this);
     this.addoption = this.addoption.bind(this)
+    this.removeOption = this.removeOption.bind(this)
   }
         addoption(){
-        
-        var options = this.props.options.slice()
-        options.push(this.props.options.length)
+          
+        var options = this.props.option.slice()
+        options.push(this.props.option.length)
         this.props.addOptions(options)
-    }
+}
+removeOption(key){
+         
+        const option = this.props.option.filter((option)=>{
+            return option!==key
+        })
+        this.props.removeOption(option)
+}
 
 ubmit(e){
     e.preventDefault()
@@ -47,8 +57,13 @@ this.props.createNewPoll(newPoll)
             <div className='container center'>
             {this.props.isCreated ? 
                 (<Share id = {this.props.pollId}/>):
-                (<Form options={this.props.options} id={this.props.pollId} ubmit={this.ubmit} poll={this.props.newPoll} setPoll={this.setPoll}/>)
+                (<Form removeOption={this.removeOption} addoption={this.addoption} options={this.props.option} id={this.props.pollId} ubmit={this.ubmit} poll={this.props.newPoll} setPoll={this.setPoll}/>)
             }
+                <Snackbar
+          open={this.props.isAuthenticated}
+          message={this.props.message}
+          autoHideDuration={2000}
+        />
             </div>
         )
     }
@@ -58,7 +73,9 @@ const mapStateToProps = (state) => {
       newPoll: state.polls.newPoll,
       pollId: state.polls.pollId,
       isCreated: state.polls.isCreated,
-      options:state.polls.addOptions
+      isAuthenticated:state.user.isAuthenticated,
+      message: state.user.message,
+      option:state.polls.addOptions
   };
 };
 
@@ -72,6 +89,9 @@ const mapDispatchToProps = (dispatch) => {
         },
          addOptions:(option)=>{
             dispatch(addOptions(option))
+        },
+        removeOption:(options)=>{
+            dispatch(removeOption(options))
         }
         
     };

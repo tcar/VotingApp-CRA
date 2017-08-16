@@ -6,7 +6,6 @@ export default function reducer(state={
     newPoll: {},
     pollId:null,
     isCreated:false,
-    loggedin:false,
     options:[],
     vote:'',
     question:{},
@@ -49,14 +48,8 @@ export default function reducer(state={
         return {...state,
            newPoll:action.payload}
       }
-        case'LOGIN' :{
-        return {...state,
-           loggedin:true}
-      }
-        case'LOGOUT' :{
-        return {...state,
-           loggedin:false}
-      }
+    
+     
         case'NEW_POLL' :{
         return {...state,
            isCreated:false}
@@ -82,7 +75,16 @@ export default function reducer(state={
            isVoted:false
         }
       }
-
+       case'ADD_OPTION' :{
+        return {...state,
+           addOptions:action.payload
+        }
+      }
+       case'REMOVE_OPTION' :{
+        return {...state,
+           addOptions:action.payload
+        }
+      }
 
        default:
     return state

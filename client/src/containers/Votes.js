@@ -48,7 +48,6 @@ import Voting from '../components/Voting';
         e.preventDefault()
         
         this.props.postVote(this.props.vote)
-      
     }
 
     selectedOption(e){

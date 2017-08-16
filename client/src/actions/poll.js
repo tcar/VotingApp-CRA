@@ -34,18 +34,7 @@ export function createNewPoll(newPoll){
         payload: newPoll
     }
 }
-export function login(){
-    return{
-        type:'LOGIN',
 
-    }
-}
-    export function logout(){
-    return{
-        type:'LOGOUT',
-
-    }
-}
 
     export function newPoll(){
     return{
@@ -82,5 +71,11 @@ export function login(){
     return{
         type:'ADD_OPTION',
         payload:option
+    }
+}
+   export function removeOption(options){
+    return{
+        type:'REMOVE_OPTION',
+        payload:options
     }
 }

@@ -1,9 +1,10 @@
 import React from "react";
 import RaisedButton from 'material-ui/RaisedButton';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 
-export default class Header extends React.Component {
+class Header extends React.Component {
 
 
  
@@ -15,18 +16,25 @@ export default class Header extends React.Component {
      let buttons;
      let logout;
     
-     if(this.props.login){
+     if(this.props.isAuthenticated){
+        
          buttons = (
              <div>
              <Link to="/newpoll"><RaisedButton onClick={this.props.notVoted} label="New Poll" onClick={this.props.newPoll} primary={true}  /></Link>
             <Link to="/mypolls"><RaisedButton  onClick={this.props.notVoted} label="My Polls" primary={true}  /></Link>
             </div>
          )
-         logout =(<Link to="/"><RaisedButton onClick={this.props.notVoted} onClick={this.props.logout} label="Logout" primary={true} /></Link>)
+         logout =(<Link to="/"><RaisedButton onClick={this.props.notVoted} onClick={()=>this.props.logout()} label="Logout" primary={true} /></Link>)
      }else{
 
-  buttons =(<RaisedButton onClick={this.props.notVoted} onClick={this.props.loggmein}label="Login"  primary={true}  />)
-     }
+  buttons =(
+    <div>
+    <Link to='/login'><RaisedButton label="Login"  primary={true}  /></Link>
+    <Link to='/signup'><RaisedButton label="Signup"  primary={true}  /></Link>
+    </div>
+  )
+     
+    }
        
 
 
@@ -43,3 +51,20 @@ export default class Header extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state)=>{
+  return{
+      isAuthenticated: state.user.isAuthenticated
+
+  }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+  return{
+
+  }
+
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

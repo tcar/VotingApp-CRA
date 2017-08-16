@@ -3,19 +3,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 export default class NewPoll extends React.Component {
-    constructor(){
-        super()
-        this.state={
-            options:[]
-        }
-    }
-
 
     render(){
-       const options = this.state.options.map((i)=>
+       const options = this.props.options.map((i)=>
        
        <div key={i}>
        <TextField  name='option' onChange={() => this.props.setPoll()} hintText="option"/>
+       <button onClick ={()=>this.props.removeOption(i)}>X</button>
        </div>
        )
         return (
@@ -34,7 +28,7 @@ export default class NewPoll extends React.Component {
                         <TextField  name='option'  onChange={() => this.props.setPoll()} hintText="option"/>
                       </div>
                     {options}
-                    <RaisedButton label="add options" primary={true} onClick={this.addoption.bind(this)}/><br /><br />
+                    <RaisedButton label="add options" primary={true} onClick={()=>this.props.addoption()}/><br /><br />
                     <RaisedButton type='submit' label="submit" primary={true} />
                 </form>
                 </paper>
