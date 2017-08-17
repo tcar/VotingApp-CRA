@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
-import Poll from './app/models/poll';
-import { signup, login,getUsers } from './app/routes/user';
-import {getPolls, getPoll, postPoll, deletePoll, putVote,vote} from './app/routes/poll';
+const polls = require( './app/routes/poll')
+const users= require( './app/routes/user')
+
+
+
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -30,34 +32,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-app.post('/auth/login', login);
-app.post('/auth/signup', signup);
-
-// API routes
-app.route('/polls')
-  // create a poll
-  .post( postPoll)
-  // get all the poll
-  .get(getPolls);
-
-app.route('/polls/:id')
-  // get a single poll
-  .get(getPoll)
-  // delete a single poll
-  .delete( deletePoll);
-
-app.route('/polls/voting/:vote')
-  .put(putVote)
-  .get(vote)
+app.use(users,polls);
 
 
 
-//user routes
-
-app.route('/user')
-.get(getUsers)
 
   
 // ...For all the other requests just sends back the Homepage

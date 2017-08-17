@@ -5,7 +5,8 @@ export default function reducer(state={
  isAuthenticated: false,
   token: null,
   name: null,
-  message:false
+  message:false,
+  id:null
   }, action) {
     switch (action.type) {
      
@@ -14,7 +15,8 @@ export default function reducer(state={
              isAuthenticated:true,
              token:action.payload.data.token,
              name:jwtDecode(action.payload.data.token).sub,
-             message:action.payload.data.message
+             message:action.payload.data.message,
+             id:action.payload.data.id
         }
       }
        case'SIGNUP_FAIL' :{
@@ -28,7 +30,8 @@ export default function reducer(state={
              isAuthenticated:false,
              token:null,
              name:null,
-             message:null
+             message:null,
+             id:null
         }
       }
         case'LOGIN' :{
@@ -36,7 +39,8 @@ export default function reducer(state={
              isAuthenticated:true,
              token:action.payload.data.token,
              name:jwtDecode(action.payload.data.token).sub,
-             message:action.payload.data.message
+             message:action.payload.data.message,
+             id:action.payload.data.id
         }
       }
           case'LOGIN_FAIL' :{
