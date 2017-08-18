@@ -16,5 +16,8 @@ router.route('/:id/polls')
 router.route('/')
 .get(userControler.getUsers)
 
+router.route('/delete')
+.delete(userControler.deleteUsers)
+
 
 module.exports = router

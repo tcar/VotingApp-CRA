@@ -5,8 +5,7 @@ import {postPoll} from '../actions/poll';
 import {createNewPoll, addOptions,removeOption} from '../actions/poll';
 import Form from '../components/Form';
 import Share from '../components/Share';
-import Snackbar from 'material-ui/Snackbar';
-;
+
 
 
  class NewPoll extends React.Component {
@@ -36,7 +35,7 @@ removeOption(key){
 ubmit(e){
     e.preventDefault()
 
-    this.props.postPoll(this.props.newPoll)
+    this.props.postPoll(this.props.newPoll, this.props.id)
 }
 
 setPoll(){
@@ -59,17 +58,14 @@ this.props.createNewPoll(newPoll)
                 (<Share id = {this.props.pollId}/>):
                 (<Form removeOption={this.removeOption} addoption={this.addoption} options={this.props.option} id={this.props.pollId} ubmit={this.ubmit} poll={this.props.newPoll} setPoll={this.setPoll}/>)
             }
-                <Snackbar
-          open={this.props.isAuthenticated}
-          message={this.props.message}
-          autoHideDuration={2000}
-        />
+           
             </div>
         )
     }
 }
 const mapStateToProps = (state) => {
   return {
+      id: state.user.id,
       newPoll: state.polls.newPoll,
       pollId: state.polls.pollId,
       isCreated: state.polls.isCreated,
@@ -81,8 +77,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        postPoll:(newPoll)=>{
-            dispatch(postPoll(newPoll))
+        postPoll:(newPoll, id)=>{
+            dispatch(postPoll(newPoll, id))
         },
         createNewPoll:(newPoll)=>{
             dispatch(createNewPoll(newPoll))

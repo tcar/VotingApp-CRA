@@ -36,7 +36,8 @@ export default function reducer(state={
       }
         case'POST_POLL_FULFILLED' :{
         return {...state,
-           pollId:action.payload.data.poll._id,
+           pollId:action.payload.data._id,
+
            isCreated:true
         }
 
@@ -83,6 +84,11 @@ export default function reducer(state={
        case'REMOVE_OPTION' :{
         return {...state,
            addOptions:action.payload
+        }
+      }
+         case'LOGOUT' :{
+        return {...state,
+           polls:[]
         }
       }
 

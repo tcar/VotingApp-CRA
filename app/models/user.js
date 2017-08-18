@@ -13,6 +13,7 @@ const userSchema = new Schema({
     password:{
         type: String,
         select: false
+        
     },
     name: {
         type: String,
@@ -27,6 +28,8 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
   var user = this;
+
+  if (!user.isModified('password')) return next();
   // before saving a hashed version of the password is created and saved into the db
   bcrypt.genSalt(10, function (err, salt) {
     bcrypt.hash(user.password, salt, function (err, hash) {
@@ -39,6 +42,7 @@ userSchema.pre('save', function (next) {
 userSchema.methods.comparePwd = function(password, done) {
   // Compare the password sent by the user with the one stored in the db
   bcrypt.compare(password, this.password, (err, isMatch) => {
+    console.log(password, this.password)
     done(err, isMatch);
   });
 };

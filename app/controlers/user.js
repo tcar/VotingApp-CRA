@@ -1,7 +1,7 @@
 // Our new dependencies
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
-
+import mongoose from 'mongoose'
 import User from '../models/user';
 import Poll from '../models/poll'
 // The config file contains the secret to sign the token
@@ -17,14 +17,13 @@ const createToken= (name) => {
 module.exports = {
 
 signup: (req, res) => {
-    
         // query the database to make sure the e-mail is not taken already
         User.findOne({ email: req.body.email }, (err, existingUser) => {
             if (existingUser) {
             // HTTP 409 status is sent in case the e-mail is taken
             return res.status(409).json({ message: 'Email is already taken' });
             }
-
+            console.log(req.body)
             // A new user is created with the information sent by the client
             const user = Object.assign(new User(), req.body);
             user.save((err, result) => {
@@ -41,37 +40,39 @@ signup: (req, res) => {
         });
         },
 login: (req, res) => {
-        // Query the database for user with that specific e-mail
-        User.findOne({ email: req.body.email }, '+password', (err, user) => {
-            if (!user) {
-            // If the user doesn't exist just send a HTTP 401 status
-            return res.status(401).json({ message: 'Invalid email/password' });
-            }
-            /* If the user exists, the password sent by the client is compared with the one in the db
-            with the utilily function comparePwd
-        */
-            user.comparePwd(req.body.password, (err, isMatch) => {
-            if (!isMatch) {
-            // In case of wrong password, we send another HTTP 401 status
-                return res.status(401).send({ message: 'Invalid email/password' });
-            }
-            // Correct information from the client, a token is sent
-            res.json({ message: 'You are now logged in', token: createToken(user.name),id:user._id });
-            });
-        });
-        },
+  // Query the database for user with that specific e-mail
+  User.findOne({ email: req.body.email }, '+password', (err, user) => {
+      console.log(user)
+    if (!user) {
+    // If the user doesn't exist just send a HTTP 401 status
+      return res.status(401).json({ message: 'Invalid email/password' });
+    }
+    /* If the user exists, the password sent by the client is compared with the one in the db
+    with the utilily function comparePwd
+   */
+    user.comparePwd(req.body.password, (err, isMatch) => {
+      if (!isMatch) {
+    // In case of wrong password, we send another HTTP 401 status
+        return res.status(401).send({ message: 'Invalid email/password' });
+      }
+      // Correct information from the client, a token is sent
+      res.json({ message: 'You are now logged in', token: createToken(user.name), id:user._id });
+    });
+  });
+},
 
 getUserPolls: async (req,res)=>{
             const{id} = req.params
             const user = await User.findById(id).populate('polls')
-            res.json(user)
+            res.json(user.polls)
             },
 
 newUserPoll: async (req,res)=>{
             const {id} = req.params
             const newPoll = new Poll(req.body);
             //get user
-            const user = await User.findById(id);
+            const user = await User.findById(id, +'password');
+            console.log(user)
             newPoll.created_by = user;
             await newPoll.save();
 
@@ -84,6 +85,15 @@ newUserPoll: async (req,res)=>{
 getUsers: (req, res) => {
         
         User.find({},(err, users) =>{
+            if (err){
+                res.send(err);
+            }
+            res.json(users)
+            } )
+        },
+deleteUsers: (req, res) => {
+        
+        User.remove({},(err, users) =>{
             if (err){
                 res.send(err);
             }

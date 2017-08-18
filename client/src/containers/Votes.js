@@ -23,6 +23,7 @@ import Voting from '../components/Voting';
     
     componentDidMount(){
         const id = this.props.match.params.data
+        console.log(id)
         this.props.getOptions(id);
     }
 

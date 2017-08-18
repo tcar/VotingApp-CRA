@@ -1,7 +1,6 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import Snackbar from 'material-ui/Snackbar';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom'
 
@@ -40,11 +39,7 @@ render(){
                     <RaisedButton type='submit' label="login" primary={true} />
                     </form>
                 </paper>
-                <Snackbar
-          open={this.props.message}
-          message={this.props.message}
-          autoHideDuration={2000}
-        />
+            
             </div>
 
     )  

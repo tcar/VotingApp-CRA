@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import{signup} from '../actions/user'
 import {Redirect} from 'react-router-dom';
-import Snackbar from 'material-ui/Snackbar';
 
 
  class Signup extends React.Component {
@@ -48,11 +47,7 @@ render(){
                     <RaisedButton  type='submit' label="signup" primary={true} />
                     </form>
                 </paper>
-                      <Snackbar
-          open={this.props.message}
-          message={this.props.message}
-          autoHideDuration={2000}
-        />
+                      
             </div>
 
     )

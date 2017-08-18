@@ -5,21 +5,14 @@ import Poll from '../models/poll';
 
 
 module.exports = {
-getPolls: async (req, res) => {
-       const Polls = await Poll.find({})
-            res.json(Polls)  
-        },
+
 getPoll: async (req, res) => {
         const {id} = req.params;
         
-        const Polls = Poll.findById(id)
-            res.json(Polls)
+        const polls = await Poll.findById(id)
+            res.json(polls)
         }, 
-postPoll: async (req, res) => {
-        let poll = Object.assign(new Poll(), req.body);
-        const savePoll = await poll.save()
-            res.json(savePoll)
-        }, 
+ 
 deletePoll: async (req, res) => {
            const removePoll = await Poll.remove({_id : req.params.id})
                     res.json({message:'succesfully deleted'})

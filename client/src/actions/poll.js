@@ -1,18 +1,18 @@
 import axios from "axios";
 
 
-export function getPolls(){
+export function getPolls(id){
     return {
         type:'FETCH_POLLS',
-        payload:axios.get('http://localhost:8080/polls')
+        payload:axios.get('http://localhost:8080/' + id + '/polls')
      } 
 }
 
-export function deletePoll(id){
+export function deletePoll(id, userId){
 
     const result = (
         axios.delete('http://localhost:8080/polls/' + id).then(()=>{
-            return axios.get('http://localhost:8080/polls')
+            return axios.get('http://localhost:8080/' + userId + '/polls')
         })
     )
     return {
@@ -21,10 +21,10 @@ export function deletePoll(id){
      } 
 }
 
-export function postPoll(newPoll){
+export function postPoll(newPoll, id){
     return{
         type:'POST_POLL',
-        payload:axios.post('http://localhost:8080/polls', newPoll)
+        payload:axios.post('http://localhost:8080/' + id +'/polls' , newPoll)
     }
 }
 

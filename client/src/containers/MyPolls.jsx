@@ -12,14 +12,14 @@ import {deletePoll} from '../actions/poll'
         this.deleteElement=this.deleteElement.bind(this)
     }
     
-    componentDidMount(){
-            this.props.getPolls();
+    componentDidMount(id){
+            this.props.getPolls(this.props.id);
             
     }
     
-    deleteElement(id){
+    deleteElement(id, userId){
             
-    this.props.deletePoll(id)
+    this.props.deletePoll(id, this.props.id)
   
 
     }
@@ -43,17 +43,18 @@ import {deletePoll} from '../actions/poll'
 const mapStateToProps = (state) => {
   return {
       polls: state.polls,
+      id:state.user.id
      
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getPolls: () => {
-            dispatch(getPolls());
+        getPolls: (id) => {
+            dispatch(getPolls(id));
         },
-        deletePoll: (id) => {
-            dispatch(deletePoll(id));
+        deletePoll: (id, userId) => {
+            dispatch(deletePoll(id, userId));
         }
     };
 };
