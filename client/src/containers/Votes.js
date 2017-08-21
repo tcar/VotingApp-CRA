@@ -9,13 +9,7 @@ import Voting from '../components/Voting';
 
     constructor(){
         super()
-        this.state = {
-            options:[],
-            vote:'',
-            question:{},
-            isVoted: false,
-            getVotes:{}
-        };
+     
 
         this.postVote = this.postVote.bind(this)
         this.selectedOption = this.selectedOption.bind(this)

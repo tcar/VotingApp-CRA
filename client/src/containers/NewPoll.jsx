@@ -11,7 +11,9 @@ import Share from '../components/Share';
  class NewPoll extends React.Component {
     constructor (props) {
     super(props);
-
+        this.state={
+            disable:true
+        }
     // Bind this (context) to the functions to be passed down to the children components
     this.ubmit = this.ubmit.bind(this);
     this.setPoll = this.setPoll.bind(this);
@@ -41,9 +43,19 @@ ubmit(e){
 setPoll(){
     const poll=[]
 const inputs = document.getElementsByName('option')
+
   for (let input of inputs) {
+
+      if(input.value===''|| document.getElementById('question').value===''){
+          return this.setState({disable:true})
+      }else{
+          this.setState({disable:false})
+      }
+
+
       poll.push({answear:input.value})
 }
+
 const newPoll ={
     question: document.getElementById('question').value,
     options: poll
@@ -56,7 +68,7 @@ this.props.createNewPoll(newPoll)
             <div className='container center'>
             {this.props.isCreated ? 
                 (<Share id = {this.props.pollId}/>):
-                (<Form removeOption={this.removeOption} addoption={this.addoption} options={this.props.option} id={this.props.pollId} ubmit={this.ubmit} poll={this.props.newPoll} setPoll={this.setPoll}/>)
+                (<Form disable={this.state.disable} removeOption={this.removeOption} addoption={this.addoption} options={this.props.option} id={this.props.pollId} ubmit={this.ubmit} poll={this.props.newPoll} setPoll={this.setPoll}/>)
             }
            
             </div>

@@ -44,7 +44,13 @@ class Header extends React.Component {
       <div className = 'container header'>
       <div className= 'row '>{logout}</div>
         <h1>VotePlex</h1>
-        <h2>Create custom polls with live results</h2>
+        {this.props.isAuthenticated?(
+          <div>
+            <h1>welcome {this.props.name}</h1>
+            <h2>Create custom polls with live results</h2>
+          </div>
+        ):<h2>Create custom polls with live results</h2>
+        }
         <div className= 'row center'>{buttons}</div>
       </div>
 
@@ -54,8 +60,8 @@ class Header extends React.Component {
 
 const mapStateToProps = (state)=>{
   return{
-      isAuthenticated: state.user.isAuthenticated
-
+      isAuthenticated: state.user.isAuthenticated,
+      name: state.user.name
   }
 }
 

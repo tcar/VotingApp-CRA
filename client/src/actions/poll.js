@@ -78,4 +78,5 @@ export function createNewPoll(newPoll){
         type:'REMOVE_OPTION',
         payload:options
     }
+    
 }

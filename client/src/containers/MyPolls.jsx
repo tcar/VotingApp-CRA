@@ -31,9 +31,9 @@ import {deletePoll} from '../actions/poll'
 
         return (
             <div className='container center'>
-                 <List>
-                    {polls}
-                 </List>
+             <List>
+                {polls}
+             </List> 
             </div>
         )
     }
@@ -43,7 +43,8 @@ import {deletePoll} from '../actions/poll'
 const mapStateToProps = (state) => {
   return {
       polls: state.polls,
-      id:state.user.id
+      id:state.user.id,
+      isAuthenticated: state.user.isAuthenticated
      
   };
 };

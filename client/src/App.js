@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {BrowserRouter,Route} from 'react-router-dom';
+import {BrowserRouter,Route, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux'
+import * as d3 from "d3";
 
 import Home from "./components/Home";
 import NewPoll from "./containers/NewPoll";
@@ -8,14 +10,27 @@ import Votes from "./containers/Votes";
 import Signup from "./containers/Signup";
 import Login from "./containers/Login";
 
+
+const PrivateRoute = ({ component: Component,authenticated, ...rest }) => (
+  <Route {...rest} render={props => (
+    authenticated ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/Login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 class App extends Component {
   render() {
     return (
 <BrowserRouter className='App'>
     <div>
     <Route path="/" component = {Home} />
-    <Route path="/newpoll" component = {NewPoll} />
-    <Route path="/mypolls" component = {MyPolls} />
+    <PrivateRoute authenticated={this.props.isAuthenticated} path="/newpoll" component = {NewPoll} />
+    <PrivateRoute authenticated={this.props.isAuthenticated} path="/mypolls" component = {MyPolls} />
     <Route path="/votes/:data" component = {Votes} />
     <Route path="/signup" component = {Signup} />
     <Route path="/login" component = {Login} />
@@ -25,4 +40,11 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps=(state)=>{
+
+  return{
+    isAuthenticated:state.user.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps)(App);

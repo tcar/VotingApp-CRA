@@ -1,8 +1,8 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom'
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 import {logi} from '../actions/user';
 
@@ -10,7 +10,20 @@ import {logi} from '../actions/user';
  class Login extends React.Component {
 constructor(){
     super()
+    this.state={
+        user:{
+            email:'',
+            password:''
+        }
+    }
     this.login= this.login.bind(this)
+    this.handleChange= this.handleChange.bind(this)
+}
+
+handleChange(event){
+     const  {user}  = this.state;
+        user[event.target.name] = event.target.value;
+        this.setState({ user });
 }
 
 render(){
@@ -21,23 +34,33 @@ render(){
         <div className='container center'>
             <paper>
                 <h1>Login</h1>
-                    <form onSubmit={(e)=>this.login(e)}>
-                        <TextField
+                    <ValidatorForm  onSubmit={(e)=>this.login(e)}>
+                        <TextValidator
+                        onChange={this.handleChange}
                          hintText='email'
                          floatingLabelText='email' 
                          id='email' 
-                         name='email'>
-                        </TextField>
+                         name='email'
+                         value={this.state.user.email}
+                         validators={['required', 'isEmail']}
+                         errorMessages={['this field is required', 'email is not valid']}
+                         >
+                        </TextValidator>
                         <br/>
-                        <TextField
+                        <TextValidator
                          type='password'
                          hintText='password'
+                         onChange={this.handleChange}
                          floatingLabelText='password' 
                          id='password' 
-                         name='password'>
-                        </TextField><br/>
+                         name='password'
+                         value={this.state.user.password}
+                         validators={['required']}
+                         errorMessages={['password is required']}
+                         >
+                        </TextValidator><br/>
                     <RaisedButton type='submit' label="login" primary={true} />
-                    </form>
+                    </ValidatorForm>
                 </paper>
             
             </div>

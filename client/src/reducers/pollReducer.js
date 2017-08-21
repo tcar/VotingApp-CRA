@@ -88,9 +88,11 @@ export default function reducer(state={
       }
          case'LOGOUT' :{
         return {...state,
-           polls:[]
+           polls:[],
+           addOptions:[]
         }
       }
+      
 
        default:
     return state
